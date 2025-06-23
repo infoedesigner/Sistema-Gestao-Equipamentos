@@ -1,0 +1,67 @@
+CREATE DATABASE IF NOT EXISTS dbsge 
+USE dbsge`;
+
+
+CREATE TABLE IF NOT EXISTS `tbcontract` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ncontrato` varchar(30) NOT NULL,
+  `tipo` varchar(30) NOT NULL,
+  `municipio` varchar(30) NOT NULL,
+  `secretaria` varchar(30) NOT NULL,
+  `inic_contrato` varchar(10) NOT NULL,
+  `vencimento` varchar(10) NOT NULL,
+  `observacao` text DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ncontrato` (`ncontrato`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+CREATE TABLE IF NOT EXISTS `tbequipaments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `idcontrato` int(11) NOT NULL,
+  `patrimonio` varchar(11) NOT NULL,
+  `tipo` varchar(40) NOT NULL,
+  `descricao` varchar(100) NOT NULL,
+  `nserie` varchar(40) NOT NULL,
+  `setor` varchar(60) NOT NULL,
+  `data_instalacao` varchar(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `patrimonio` (`patrimonio`),
+  KEY `idcontrato` (`idcontrato`),
+  CONSTRAINT `tbequipaments_ibfk_1` FOREIGN KEY (`idcontrato`) REFERENCES `tbcontract` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=142 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+CREATE TABLE IF NOT EXISTS `tbfuncionarios` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nomecompleto` varchar(150) NOT NULL,
+  `rg` varchar(15) NOT NULL,
+  `cpf` varchar(15) NOT NULL,
+  `pis` varchar(15) NOT NULL,
+  `ctps` varchar(20) NOT NULL,
+  `endereco` varchar(200) NOT NULL,
+  `funcao` varchar(100) NOT NULL,
+  `admissao` varchar(10) NOT NULL,
+  `salario_base` double(10,2) NOT NULL,
+  `observacao` varchar(300) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `rg` (`rg`),
+  UNIQUE KEY `cpf` (`cpf`),
+  UNIQUE KEY `pis` (`pis`),
+  UNIQUE KEY `ctps` (`ctps`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+CREATE TABLE IF NOT EXISTS `tbuser` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(60) NOT NULL,
+  `funcao` varchar(40) DEFAULT NULL,
+  `perfil` varchar(30) NOT NULL,
+  `login` varchar(30) NOT NULL,
+  `senha` varchar(30) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `login` (`login`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=UTF8MB4_GENERAL_CI;
+
+INSERT INTO tbuser (nome, funcao, perfil, login, senha) VALUES ('Administrador', 'ADM', 'admin', 'admin', 'admin');
+
